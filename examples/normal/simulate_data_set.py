@@ -49,7 +49,6 @@ except:
     sys.stderr.write('    sample_size mean standard_deviation\n\nThe stacktrace of error:\n')
     raise
 
-
 # This part is the actual simulation and output:
 for i in xrange(n):
     variate = random.normalvariate(mu=mean, sigma=std_dev)
