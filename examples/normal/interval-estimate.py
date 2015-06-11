@@ -12,24 +12,6 @@ import math
 
 std_dev = None
 
-def calc_likelihood(data, m):
-    global std_dev # do NOT use global variables in general!
-    datum_likelihood_list = []
-    # Pr(data | m) = Product Pr(datum_i | m)
-    # Pr(datum_i | m ) = (2 pi std_dev^2)^(-1/2) exp(-(datum_i - m)^2/(2 std_dev^2))
-    coefficient = 1.0/(std_dev * math.sqrt(2*math.pi))
-    var_factor = -1.0/(2.0*std_dev*std_dev)
-    likelihood = 1.0
-    for datum in data:
-        diff = datum - m
-        datum_likelihood = coefficient * math.exp(var_factor*diff*diff)
-        datum_likelihood_list.append(datum_likelihood)
-        likelihood *= datum_likelihood
-    return likelihood
-
-def naive_calc_ln_likelihood(data, m):
-    return math.log(calc_likelihood(data, m))
-
 def calc_ln_likelihood(data, m):
     global std_dev # do NOT use global variables in general!
     datum_ln_likelihood_list = []
