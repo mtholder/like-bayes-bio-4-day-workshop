@@ -50,6 +50,7 @@ if (seed == "") {
         q(status=1);
     }
 }
+set.seed(seed);
 write(paste("pseudorandom number seed =",
               seed,
               "(use the env. var. SIMULATE_DATA_SET_SEED to set the seed)."),
