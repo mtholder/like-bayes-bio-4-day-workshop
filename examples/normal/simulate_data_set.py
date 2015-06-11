@@ -9,7 +9,7 @@ and writes to standard output a simulated realization from the normal distributi
 
 # In a command-line program, we have 2 output "streams" that we can write to
 # You should used sys.stderr for status messages and error messages; and
-#   use sys.stdout for the "real" output of the program. "print" writes to 
+#   use sys.stdout for the "real" output of the program. "print" writes to
 #   sys.stdout
 # Some notes on the output below:
 #   Writing to the ouput stream requires that we convert our value to a "string"
