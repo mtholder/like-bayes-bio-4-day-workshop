@@ -7,6 +7,7 @@ If a third argument is provided, it is interpreted as a value for mu
     and the likelihood is calculated.
 '''
 from __future__ import print_function
+from scipy import optimize
 import math
 
 std_dev = None
@@ -38,7 +39,6 @@ def single_var_maximize_ln_L(data, ln_L_func, low_param, high_param):
         that can be used in the call to find a set of points that bracket the
         optimum.
     '''
-    from scipy import optimize
     def scipy_ln_likelihood(x):
         '''SciPy minimizes functions. We want to maximize the likelihood. This
         function adapts our ln_likelihood function to the minimization context
@@ -59,6 +59,76 @@ def single_var_maximize_ln_L(data, ln_L_func, low_param, high_param):
                          full_output=False)
     return mle
 
+def find_lower_bound(data,
+                     ln_L_func,
+                     mle,
+                     ln_L_cutoff):
+    eps = 0.1 # to avoid crashes if the MLE= 0
+    lb = mle *.95 - eps
+    lb_ln_L = ln_L_func(data, lb)
+    if VERBOSE:
+        sys.stderr.write('In lower conf finder lb = {m} lnL = {l}\n'.format(m=lb, l=lb_ln_L))
+    while lb_ln_L > ln_L_cutoff:
+        value_diff = mle - lb
+        lb = lb - value_diff
+        lb_ln_L = ln_L_func(data, lb)
+        if VERBOSE:
+            sys.stderr.write('In lower conf finder lb = {m} lnL = {l}\n'.format(m=lb, l=lb_ln_L))
+    return lb
+
+def find_upper_bound(data,
+                     ln_L_func,
+                     mle,
+                     ln_L_cutoff):
+    eps = 0.1 # to avoid crashes if the MLE= 0
+    ub = mle *1.05 + eps
+    ub_ln_L = ln_L_func(data, ub)
+    if VERBOSE:
+        sys.stderr.write('In upper conf finder ub = {m} lnL = {l}\n'.format(m=ub, l=ub_ln_L))
+    while ub_ln_L > ln_L_cutoff:
+        value_diff = ub - mle
+        ub = ub + value_diff
+        ub_ln_L = ln_L_func(data, ub)
+        if VERBOSE:
+            sys.stderr.write('In upper conf finder ub = {m} lnL = {l}\n'.format(m=ub, l=ub_ln_L))
+    return ub
+
+def find_lower_confidence_bound(data,
+                                ln_L_func,
+                                mle,
+                                ln_L_cutoff):
+    def scipy_ln_likelihood_lower_conf(x):
+        if x > mle:
+            return float('inf')
+        ln_L = ln_L_func(data, x)
+        if VERBOSE:
+            sys.stderr.write('In lower conf wrapper around ln_L_func with param = {m} lnL = {l}\n'.format(m=x, l=ln_L))
+        return abs(ln_L - ln_L_cutoff)
+
+    lb = find_lower_bound(data, ln_L_func, mle, ln_L_cutoff)
+    return optimize.fminbound(scipy_ln_likelihood_lower_conf,
+                              lb,
+                              mle,
+                              xtol=1e-8,
+                              full_output=False)
+def find_upper_confidence_bound(data,
+                                ln_L_func,
+                                mle,
+                                ln_L_cutoff):
+    def scipy_ln_likelihood_upper_conf(x):
+        if x < mle:
+            return float('inf')
+        ln_L = ln_L_func(data, x)
+        if VERBOSE:
+            sys.stderr.write('In upper conf wrapper around ln_L_func with param = {m} lnL = {l}\n'.format(m=x, l=ln_L))
+        return abs(ln_L - ln_L_cutoff)
+
+    ub = find_upper_bound(data, ln_L_func, mle, ln_L_cutoff)
+    return optimize.fminbound(scipy_ln_likelihood_upper_conf,
+                              mle,
+                              ub,
+                              xtol=1e-8,
+                              full_output=False)
 
 if __name__ == '__main__':
     import sys
@@ -85,6 +155,11 @@ if __name__ == '__main__':
     n = len(data)
     mean = sum(data)/n
     print('mean = {m}'.format(m=mean))
+    std_err = std_dev/math.sqrt(n)
+    z_crit = 1.96
+    margin_of_error = z_crit*std_err
+    print('Z-statistic based 95% CI: ({l}, {u})'.format(l=(mean - margin_of_error),
+                                                        u=(mean + margin_of_error)))
     user_ln_like = None
     if user_mu is not None:
         mu = user_mu
@@ -100,10 +175,26 @@ if __name__ == '__main__':
     if user_ln_like is not None:
         ln_l_diff = 2*(ln_like - user_ln_like)
         print('2*(difference in lnL) = {}'.format(ln_l_diff))
-        if ln_l_diff > 3.84/2.0:
+        if ln_l_diff > 3.84:
             print('user-supplied parameter value is significantly worse using the chi-squared based cutoff')
         else:
             print('user-supplied parameter value is NOT significantly worse using the chi-squared based cutoff')
-
+    else:
+        chi_sq_critical = 3.84
+        cutoff_diff = chi_sq_critical/2.0
+        cutoff = ln_like - cutoff_diff
+        lower_mu = find_lower_confidence_bound(data,
+                                               ln_L_func=naive_calc_ln_likelihood,
+                                               mle=mle,
+                                               ln_L_cutoff=cutoff)
+        lower_ln_l = naive_calc_ln_likelihood(data, lower_mu)
+        print('lower-CI ln[Pr(data | lower_mu={m})] = {l}'.format(m=lower_mu, l=lower_ln_l))
+        upper_mu = find_upper_confidence_bound(data,
+                                               ln_L_func=naive_calc_ln_likelihood,
+                                               mle=mle,
+                                               ln_L_cutoff=cutoff)
+        upper_ln_l = naive_calc_ln_likelihood(data, upper_mu)
+        print('upper-CI ln[Pr(data | upper_mu={m})] = {l}'.format(m=upper_mu, l=upper_ln_l))
+        print('Approx. 95% CI: ({l}, {u})'.format(l=lower_mu, u=upper_mu))
 
 
