@@ -151,6 +151,7 @@ if __name__ == '__main__':
         sys.stderr.write(__doc__)
         raise
 
+    ln_l_function = naive_calc_ln_likelihood
 
     n = len(data)
     mean = sum(data)/n
@@ -163,14 +164,14 @@ if __name__ == '__main__':
     user_ln_like = None
     if user_mu is not None:
         mu = user_mu
-        user_ln_like = naive_calc_ln_likelihood(data, mu)
+        user_ln_like = ln_l_function(data, mu)
         print('ln[Pr(data | mu={m})] = {l}'.format(m=mu, l=user_ln_like))
     mle = single_var_maximize_ln_L(data,
-                                   ln_L_func=naive_calc_ln_likelihood,
+                                   ln_L_func=ln_l_function,
                                    low_param=min(data),
                                    high_param=max(data))
     mu = mle
-    ln_like = naive_calc_ln_likelihood(data, mu)
+    ln_like = ln_l_function(data, mu)
     print('ln[Pr(data | mu={m})] = {l}'.format(m=mu, l=ln_like))
     if user_ln_like is not None:
         ln_l_diff = 2*(ln_like - user_ln_like)
@@ -184,16 +185,16 @@ if __name__ == '__main__':
         cutoff_diff = chi_sq_critical/2.0
         cutoff = ln_like - cutoff_diff
         lower_mu = find_lower_confidence_bound(data,
-                                               ln_L_func=naive_calc_ln_likelihood,
+                                               ln_L_func=ln_l_function,
                                                mle=mle,
                                                ln_L_cutoff=cutoff)
-        lower_ln_l = naive_calc_ln_likelihood(data, lower_mu)
+        lower_ln_l = ln_l_function(data, lower_mu)
         print('lower-CI ln[Pr(data | lower_mu={m})] = {l}'.format(m=lower_mu, l=lower_ln_l))
         upper_mu = find_upper_confidence_bound(data,
-                                               ln_L_func=naive_calc_ln_likelihood,
+                                               ln_L_func=ln_l_function,
                                                mle=mle,
                                                ln_L_cutoff=cutoff)
-        upper_ln_l = naive_calc_ln_likelihood(data, upper_mu)
+        upper_ln_l = ln_l_function(data, upper_mu)
         print('upper-CI ln[Pr(data | upper_mu={m})] = {l}'.format(m=upper_mu, l=upper_ln_l))
         print('Approx. 95% CI: ({l}, {u})'.format(l=lower_mu, u=upper_mu))
 
