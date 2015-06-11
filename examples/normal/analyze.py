@@ -23,12 +23,29 @@ def calc_likelihood(data, m):
     for datum in data:
         diff = datum - m
         datum_likelihood = coefficient * math.exp(var_factor*diff*diff)
-        datum_likelihood_list.append(datum)
+        datum_likelihood_list.append(datum_likelihood)
         likelihood *= datum_likelihood
     return likelihood
 
 def naive_calc_ln_likelihood(data, m):
     return math.log(calc_likelihood(data, m))
+
+def calc_ln_likelihood(data, m):
+    global std_dev # do NOT use global variables in general!
+    datum_ln_likelihood_list = []
+    # Pr(data | m) = Product Pr(datum_i | m)
+    # Pr(datum_i | m ) = (2 pi std_dev^2)^(-1/2) exp(-(datum_i - m)^2/(2 std_dev^2))
+    coefficient = 1.0/(std_dev * math.sqrt(2*math.pi))
+    ln_c = math.log(coefficient)
+    var_factor = -1.0/(2.0*std_dev*std_dev)
+    ln_L = 0.0
+    for datum in data:
+        diff = datum - m
+        datum_ln_likelihood = ln_c + var_factor*diff*diff
+        datum_ln_likelihood_list.append(datum_ln_likelihood)
+        ln_L += datum_ln_likelihood
+    return ln_L
+
 
 def single_var_maximize_ln_L(data, ln_L_func, low_param, high_param):
     '''Takes `data` (the data set)
@@ -151,7 +168,7 @@ if __name__ == '__main__':
         sys.stderr.write(__doc__)
         raise
 
-    ln_l_function = naive_calc_ln_likelihood
+    ln_l_function = calc_ln_likelihood
 
     n = len(data)
     mean = sum(data)/n
@@ -172,6 +189,7 @@ if __name__ == '__main__':
                                    high_param=max(data))
     mu = mle
     ln_like = ln_l_function(data, mu)
+    print('MLE = m'.format(m=mu))
     print('ln[Pr(data | mu={m})] = {l}'.format(m=mu, l=ln_like))
     if user_ln_like is not None:
         ln_l_diff = 2*(ln_like - user_ln_like)
