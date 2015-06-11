@@ -17,7 +17,6 @@
 #       construct to describe the series of values. The default separator is 
 #       a space.
 #   The "\n" represents a newline character.
-
 args <- commandArgs(trailingOnly=TRUE);
 n <- as.integer(args[1]);
 if (is.na(n) || n < 1) {
