@@ -24,7 +24,7 @@ if (length(args) > 2) {
 ## Read the data...
 data <- as.vector(as.matrix(read.table(filename, header=FALSE)))
 avg = mean(data);
-print(paste("mean =", avg));
+print(paste("sample mean =", avg));
 
 calc.ln.likelihood = function(data, mu) {
     coefficient <- 1.0/(std.dev * sqrt(2*pi));

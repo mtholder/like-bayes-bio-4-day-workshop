@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
     n = len(data)
     mean = sum(data)/n
-    print('mean = {m}'.format(m=mean))
+    print('sample mean = {m}'.format(m=mean))
     std_err = std_dev/math.sqrt(n)
     z_crit = 1.96
     margin_of_error = z_crit*std_err

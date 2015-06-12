@@ -24,7 +24,7 @@ if (length(args) > 2) {
 ## Read the data...
 data <- as.vector(as.matrix(read.table(filename, header=FALSE)))
 avg = mean(data);
-print(paste("mean =", avg));
+print(paste("sample mean =", avg));
 
 calc.likelihood = function(data, mu) {
     datum_likelihood_vec <- dnorm(data, mean=mu, sd=std.dev);
