@@ -171,7 +171,7 @@ if __name__ == '__main__':
                                    high_param=max(data))
     mu = mle
     ln_like = ln_l_function(data, mu)
-    print('MLE = m'.format(m=mu))
+    print('MLE = {m}'.format(m=mu))
     print('ln[Pr(data | mu={m})] = {l}'.format(m=mu, l=ln_like))
     if user_ln_like is not None:
         ln_l_diff = 2*(ln_like - user_ln_like)

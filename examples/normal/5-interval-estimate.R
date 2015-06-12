@@ -101,7 +101,10 @@ find.upper.confidence.bound <- function(data,
 
 if (!is.na(user.mu)) {
     user.ln.like <- calc.ln.likelihood(data, user.mu);
-    print(paste("ln[Pr(data | mu={m})] = ", user.ln.like));
+    print(paste("ln[Pr(data | mu=",
+                user.mu,
+                ")] = ",
+                user.ln.like));
 } else {
     solution <- optimize(f=optimizer.ln.like,
                          interval=c(min(data), max(data)));
