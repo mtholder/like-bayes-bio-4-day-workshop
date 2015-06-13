@@ -77,11 +77,14 @@ The two competing approaches to statistics:
   \item Answer your question and report the results.
 \end{compactenum}
 
+Choosing a test statistic can be difficult.\\
+Deriving a null distribution (step 5a) can be really difficult.
 \myNewSlide
 \section*{Question: Where does ``likelihood'' fit in?}
-{\bf Answer:} the choice of a test statistic.\\
+{\bf Answer:} the choice of a test statistic in frequentist statistics.
+And we'll see that the likelihood is central to Bayesian inference, too.\\
 
-Law of likelihood: ``the extent to which the evidence supports one parameter value or hypothesis against another is equal to the ratio of their likelihoods''\footnote{\href{https://en.wikipedia.org/wiki/Likelihood_principle#The_law_of_likelihood}{Wikipedia} -- everyone's favorite source of assertions}
+Law of likelihood: ``the extent to which the evidence supports one parameter value or hypothesis against another is equal to the ratio of their likelihoods''\footnote{definition from \href{https://en.wikipedia.org/wiki/Likelihood_principle#The_law_of_likelihood}{Wikipedia} -- everyone's favorite source of assertions}
 
 Using a likelihood ratio as a test statistic $\rightarrow$ powerful test.
 
@@ -97,10 +100,31 @@ so we use the following trick:
 
 For large sample sizes,\\
 if you calculate a likelihood under a model with $x$ extra parameters, \\
+2 $\times$ the natural logarithm of\\
 the ratio of likelihoods between the larger model and the true model \\
 will
 be distributed according to $\chi^2_{df=x}$
 
 This is often referred to as the ``likelihood ratio test.''
 
-\end{document}   
+
+\myNewSlide
+\section*{Definition of likelihood}
+In common English usage: ``likelihood'' = ``probability.''
+
+In statistics:
+The likelihood of a model/parameter $\theta$ based on observing data $X$ is:
+\begin{eqnarray*}
+  \ell(\theta) & = & \Pr(X \mid \theta) \\
+  \ell(\theta) & = & f(X \mid \theta)
+\end{eqnarray*}
+Because we use likelihood {\em ratios} for estimation, it is acceptable
+to use any function proportional to the probability of the data.
+\begin{eqnarray*}
+  \ell(\theta) & \propto & \Pr(X \mid \theta) \\
+  \ell(\theta) & \propto & f(X \mid \theta)
+\end{eqnarray*}
+
+Only compare likelihoods when they are calculated on the same data set $X$.
+
+\end{document}
