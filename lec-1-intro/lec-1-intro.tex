@@ -1,5 +1,6 @@
 \documentclass[landscape]{foils} 
 \input{../preamble.tex}
+\renewcommand{\Pr}{\mathbb{P}}
 \usepackage{pdfpages}
 \begin{document}
 
@@ -126,5 +127,53 @@ to use any function proportional to the probability of the data.
 \end{eqnarray*}
 
 Only compare likelihoods when they are calculated on the same data set $X$.
+
+\myNewSlide
+\section*{The sum of likelihoods over all parameter values is$\ldots$}
+some number, but nothing you can use.
+
+$$\sum_i \Pr(X \mid \theta_i) \mbox{ is not necssarily } 1$$
+
+
+By the laws of probability:
+$$\sum \Pr(X_i \mid \theta) = 1$$
+but we know what our data is, so we do not sum over all possible data sets!
+
+\myNewSlide
+\section*{Modeling}
+Modeling to perform likelihood calculations is the art of moving from a 
+scientific question to abstract representations of the question which
+allow you to calculate the probability of a particular data outcome.
+
+Modeling require understanding the rules of probability and often also requires:
+\begin{compactitem}
+  \item knowledge of what statistical distributions are natural fits for different processes, and
+  \item knowledge of some form of stochastic process theory (often Markov processes).
+\end{compactitem}
+Expertise in modeling requires a lot of training and is beyond the scope of this workshop.
+
+But a few rules, go a long way$\ldot$
+
+\myNewSlide
+\section*{rules of probability}
+\begin{enumerate}
+  \item $\Pr(A) = 1 - \Pr(\mbox{not } A)$
+  \item $\Pr(A,B) = \Pr(A)\Pr(B\mid A) = \Pr(B)\Pr(A\mid B)$
+  \item $\Pr(A,B) = \Pr(A)\Pr(B)$ if $A$ and $B$ are independent
+  \item $\Pr(A\mbox{ or } B) = \Pr(A) + \Pr(B) - \Pr(A,B)$
+  \item $\Pr(A\mbox{ or } B) = \Pr(A) + \Pr(B)$ if $A$ and $B$ are mutually exclusive.
+  \item $\Pr(A) = \sum_{i=1}^n\left[\Pr(A\mid B=b_i)\Pr(B=b_i)\right]$ if $B \in \{b_1, b_2,\ldots, b_n\}$.
+  \item Bayes' rule:$$\Pr(A\mid B) = \frac{\Pr(B\mid A)\Pr(A)}{\Pr(B)}$$
+\end{enumerate}
+
+\myNewSlide
+\section*{A widely used result from continuous time Markov processes}
+
+If $Q$ is a matrix of instantaneous rates where $q_{ij}$ is the rate
+of transitioning from state $i$ to state $j$, then:
+$$\Pr(t) = e^{tQ}$$
+where $t$ is the time.
+
+This lets us extrapolate about the effects of a constant process over time.
 
 \end{document}
