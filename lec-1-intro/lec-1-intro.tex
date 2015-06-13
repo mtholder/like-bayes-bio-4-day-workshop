@@ -85,7 +85,9 @@ Deriving a null distribution (step 5a) can be really difficult.
 {\bf Answer:} the choice of a test statistic in frequentist statistics.
 And we'll see that the likelihood is central to Bayesian inference, too.\\
 
-Law of likelihood: ``the extent to which the evidence supports one parameter value or hypothesis against another is equal to the ratio of their likelihoods''\footnote{definition from \href{https://en.wikipedia.org/wiki/Likelihood_principle#The_law_of_likelihood}{Wikipedia} -- everyone's favorite source of assertions}
+Law of likelihood: ``the extent to which the evidence supports one parameter value or hypothesis against another is equal to the ratio of their likelihoods''
+\footnote{definition from \href{https://en.wikipedia.org/wiki/Likelihood_principle\#The\_law\_of\_likelihood}{Wikipedia} -- 
+everyone's favorite source of assertions}
 
 Using a likelihood ratio as a test statistic $\rightarrow$ powerful test.
 
@@ -152,7 +154,7 @@ Modeling require understanding the rules of probability and often also requires:
 \end{compactitem}
 Expertise in modeling requires a lot of training and is beyond the scope of this workshop.
 
-But a few rules, go a long way$\ldot$
+But a few rules, go a long way$\ldots$
 
 \myNewSlide
 \section*{rules of probability}
@@ -175,5 +177,41 @@ $$\Pr(t) = e^{tQ}$$
 where $t$ is the time.
 
 This lets us extrapolate about the effects of a constant process over time.
+
+\myNewSlide
+\section*{A toy example: estimating the mean from a sample}
+$X$: a set of random, independent continuous measurements sampled from the same population.
+
+Assume that we know the population standard deviation, and want to estimate
+    the population mean, $\mu$.
+\begin{eqnarray*}
+  \ell(\mu) = \Pr(X \mid \mu, \sigma) & = & \prod_{i=1}^n\Pr(x_i \mid \mu, \sigma) \\
+  & = &  \prod_{i=1}^n\frac{1}{\sqrt{2\pi\sigma^2}}\mbox{ }e^{-\frac{\left(x_i-\mu\right)^2}{2\sigma^2}} \\
+\log L(\mu)  & = &  \sum_{i=1}^n\log\left[\frac{1}{\sqrt{2\pi\sigma^2}}\mbox{ }e^{-\frac{\left(x_i-\mu\right)^2}{2\sigma^2}}\right] \\
+& = &  n \log\left[\frac{1}{\sqrt{2\pi\sigma^2}}\right] + \sum_{i=1}^n\log\left[e^{-\frac{\left(x_i-\mu\right)^2}{2\sigma^2}}\right] \\
+& = &  n \log\left[\frac{1}{\sqrt{2\pi\sigma^2}}\right] - \frac{1}{2\sigma^2} \sum_{i=1}^n\left(x_i-\mu\right)^2
+\end{eqnarray*}
+Note that $\mu$ that minimizes the squared error (the least squares estimator) maximizes the likelihood.
+
+\includepdf[pages={20}]{lec11ML.pdf}
+\includepdf[pages={16}]{lec10Models.pdf}
+\includepdf[pages={25}]{lec10Models.pdf}
+\includepdf[pages={21-24}]{lec10Models.pdf}
+\includepdf[pages={26}]{lec10Models.pdf}
+\includepdf[pages={19-20}]{lec10Models.pdf}
+\includepdf[pages={20-23}]{lec11ML.pdf}
+
+\myNewSlide
+\section*{Another toy example}
+You tag 1000 territorial animals with transmitting tags.
+
+Every month you survey the area.
+Assume that you can detect every tag attached to a living organism.
+
+You know (from other studies) that the probability of a tag falling off are:
+0.10 in the first month, 0.15 in the second month, 0.2 in the third month, and
+0.25 for every month after that.
+
+Can you estimate the per-month probability of death?
 
 \end{document}
