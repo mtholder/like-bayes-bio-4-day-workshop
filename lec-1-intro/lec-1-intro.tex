@@ -8,10 +8,74 @@
 \begin{center}
 {\Large {\bf Likelihood and Bayesian Methods in Biology}}\\
 \vskip 5mm
+
 {\large
-\url{http://http://mtholder.github.io/like-bayes-bio/}\par
-\large Thanks to John Kelly and Ford Ballantyne
+\url{http://mtholder.github.io/like-bayes-bio/}\par
+Mark T. Holder (Univ.~Kansas, USA) \\
+\large Thanks to John Kelly and Ford Ballantyne \par
+\vskip 1em
+HCMR\\
+15-18 June, 2015.
 }
 \end{center}
+
+\myNewSlide
+\section*{Goals of the course}
+\begin{itemize}
+  \item Cover the basic theory associated with point estimation, interval 
+  estimation, and hypothesis testing in the maximum likelihood and Bayesian 
+  paradigms.
+  \item Use some simple computer programs in Python and R to demonstrate that
+  it is not too difficult to apply this form of statistical theory.
+  \item The examples I use are all ``toy'' simulated datasets, so we will not 
+  really get into real biology.
+\end{itemize}
+
+
+\myNewSlide
+\section*{Schedule}
+\begin{itemize}
+  \item Introduction to likelihoods and basic scripts for ML-based confidence intervals (today)
+  \item Tuesday: he numerical approaches used to optimize likelihoods, and dealing with multi-parameter models.
+  \item Bayesian Introduction: Bayesian inference and Markov chain Monte Carlo
+  \item Using model-jumping MCMC to perform model averaging.
+\end{itemize}
+
+\myNewSlide
+The two competing approaches to statistics:
+\begin{compactitem}
+  \item frequentist:
+  \begin{itemize}
+    \item {\bf probability}: the relative frequency of an event if you were able to repeat a trial an infinite number of times.
+    \item {\bf goal}: make an argument like ``This result differs significantly from what we would expect if the null model were true. Either the null is not true or we experienced an unusually large amount of sampling error.''
+    The $P$-value summarizes how unusual it would be to see results like yours if the null hypothesis were true.
+    \item {\bf we make probability statements about}: the performance of our estimation procedures.
+  \end{itemize}
+  \item Bayesian:
+  \begin{itemize}
+    \item {\bf probability}: degree of belief
+    \item {\bf goal}: express the uncertainty of an estimate:
+    ``Given a model and what one knew before one collected the data, one should now believe that the $\Pr(\mu>2.3)\approx 0.87$''
+    \item {\bf we make probability statements about}: the true values of parameters/models.
+  \end{itemize}
+\end{compactitem}
+
+\myNewSlide
+\section*{The frequentist ``recipe'' for hypothesis testing}
+\begin{compactenum}
+  \item Ask a scientific question.
+  \item State your question in terms of $H_0$ and $H_A$
+  \item Collect a random sample
+  \item Calculate descriptive statistics
+  \item Determine $P$-value:
+  \begin{compactenum}
+    \item What values of the test statistic are expected under $H_0$?
+    \item How does the observed test statistic differ from these expectations?
+    \item What is the probability of observing a value of a test statistic this extreme or more extreme if the $H_0$ is true? -- this is the $P$-value.
+  \end{compactenum}
+  \item Make a decision about $H_0$ and $H_A$
+  \item Answer your question and report the results.
+\end{compactenum}
+
 
 \end{document}   
