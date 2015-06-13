@@ -66,7 +66,7 @@ The two competing approaches to statistics:
   \item Ask a scientific question.
   \item State your question in terms of $H_0$ and $H_A$
   \item Collect a random sample
-  \item Calculate descriptive statistics
+  \item Calculate a value of a test statistic
   \item Determine $P$-value:
   \begin{compactenum}
     \item What values of the test statistic are expected under $H_0$?
@@ -77,5 +77,30 @@ The two competing approaches to statistics:
   \item Answer your question and report the results.
 \end{compactenum}
 
+\myNewSlide
+\section*{Question: Where does ``likelihood'' fit in?}
+{\bf Answer:} the choice of a test statistic.\\
+
+Law of likelihood: ``the extent to which the evidence supports one parameter value or hypothesis against another is equal to the ratio of their likelihoods''\footnote{\href{https://en.wikipedia.org/wiki/Likelihood_principle#The_law_of_likelihood}{Wikipedia} -- everyone's favorite source of assertions}
+
+Using a likelihood ratio as a test statistic $\rightarrow$ powerful test.
+
+Using maximum likelihood as an estimator: $\rightarrow$ powerful, and statistically consistent (for well-behaved models) estimator.
+
+\myNewSlide
+\section*{$P$-values for likelihood ratios}
+
+Sometimes it is analytically tractable to calculate a null distribution.
+
+More commonly, we test null models that are nested within a richer model,
+so we use the following trick:
+
+For large sample sizes,\\
+if you calculate a likelihood under a model with $x$ extra parameters, \\
+the ratio of likelihoods between the larger model and the true model \\
+will
+be distributed according to $\chi^2_{df=x}$
+
+This is often referred to as the ``likelihood ratio test.''
 
 \end{document}   
