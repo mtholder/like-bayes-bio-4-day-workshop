@@ -20,6 +20,11 @@ HCMR\\
 }
 \end{center}
 
+{
+  \normalsize
+Source code:\\
+   \url{https://github.com/mtholder/like-bayes-bio-4-day-workshop}
+}
 \myNewSlide
 \section*{Goals of the course}
 \begin{itemize}
@@ -37,7 +42,7 @@ HCMR\\
 \section*{Schedule}
 \begin{itemize}
   \item Introduction to likelihoods and basic scripts for ML-based confidence intervals (today)
-  \item Tuesday: he numerical approaches used to optimize likelihoods, and dealing with multi-parameter models.
+  \item Tuesday:  numerical approaches used to optimize likelihoods, and dealing with multi-parameter models.
   \item Bayesian Introduction: Bayesian inference and Markov chain Monte Carlo
   \item Using model-jumping MCMC to perform model averaging.
 \end{itemize}
@@ -50,7 +55,7 @@ The two competing approaches to statistics:
     \item {\bf probability}: the relative frequency of an event if you were able to repeat a trial an infinite number of times.
     \item {\bf goal}: make an argument like ``This result differs significantly from what we would expect if the null model were true. Either the null is not true or we experienced an unusually large amount of sampling error.''
     The $P$-value summarizes how unusual it would be to see results like yours if the null hypothesis were true.
-    \item {\bf we make probability statements about}: the performance of our estimation procedures.
+    \item {\bf we make probability statements about}: the long-run performance of our estimation procedures.
   \end{itemize}
   \item Bayesian:
   \begin{itemize}
@@ -179,11 +184,31 @@ where $t$ is the time.
 This lets us extrapolate about the effects of a constant process over time.
 
 \myNewSlide
+\section*{Working some examples}
+Now we'll switch to 3 examples.
+
+There is python and R code for 2 of them.
+
+The code is not the most robust in the world - you should try using a number
+of optimizers before you publish.
+
+But it should help us demonstrate the concepts.
+
+\myNewSlide
 \section*{A toy example: estimating the mean from a sample}
 $X$: a set of random, independent continuous measurements sampled from the same population.
 
 Assume that we know the population standard deviation, and want to estimate
-    the population mean, $\mu$.
+    the population mean, $\mu$.\\
+
+\myNewSlide
+\begin{eqnarray*}
+  \ell(\mu) = \Pr(X \mid \mu, \sigma) & = & \prod_{i=1}^n\Pr(x_i \mid \mu, \sigma) \\
+  & = &  \prod_{i=1}^n\left[\frac{1}{\sqrt{2\pi\sigma^2}}\mbox{ }e^{-\frac{\left(x_i-\mu\right)^2}{2\sigma^2}} \right]\\
+\end{eqnarray*}
+Note that $\mu$ that minimizes the squared error (the least squares estimator) maximizes the likelihood.
+
+\myNewSlide
 \begin{eqnarray*}
   \ell(\mu) = \Pr(X \mid \mu, \sigma) & = & \prod_{i=1}^n\Pr(x_i \mid \mu, \sigma) \\
   & = &  \prod_{i=1}^n\frac{1}{\sqrt{2\pi\sigma^2}}\mbox{ }e^{-\frac{\left(x_i-\mu\right)^2}{2\sigma^2}} \\
@@ -193,12 +218,27 @@ Assume that we know the population standard deviation, and want to estimate
 \end{eqnarray*}
 Note that $\mu$ that minimizes the squared error (the least squares estimator) maximizes the likelihood.
 
+\myNewSlide
+\section*{An example from phylogenetics}
+
+If we have a tree $T$ and branch lengths $\nu$ as our model, what is the probability of 
+an alignment of DNA sequences?
+
+We can think of a branch length being the product of time $t$ and rate of sequences evolution $\alpha$:
+$$\nu = \alpha t$$
+
 \includepdf[pages={20}]{lec11ML.pdf}
 \includepdf[pages={16}]{lec10Models.pdf}
 \includepdf[pages={25}]{lec10Models.pdf}
 \includepdf[pages={21-24}]{lec10Models.pdf}
 \includepdf[pages={26}]{lec10Models.pdf}
-\includepdf[pages={19-20}]{lec10Models.pdf}
+\myNewSlide
+\section*{JC transition probabilities}
+$$\Pr_{ii}(\nu) = \Pr(\mbox{end}= i \mid \mbox{start}=i, \nu) = \frac{1}{4} + \frac{3}{4}e^{-4\nu/3}$$
+
+$$\Pr_{ij}(\nu) = \Pr(\mbox{end}= j \mid \mbox{start}=i, \nu) = \frac{1}{4} - \frac{1}{4}e^{-4\nu/3}$$
+
+%\includepdf[pages={19-20}]{lec10Models.pdf}
 \includepdf[pages={20-23}]{lec11ML.pdf}
 
 \myNewSlide

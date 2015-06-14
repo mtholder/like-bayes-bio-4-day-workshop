@@ -9,6 +9,10 @@ LaTeX for the slides/notes are in the `lec-#-` subdirectories.
 Code examples are in `examples`.
 
 # Acknowledgements
+Thanks to Paul Lewis for several slides related to calculating likelihoods on
+phylogenetic trees.
+
+
 Thanks to [HCMR](http://www.hcmr.gr/en/) and also 
 to [John Kelly](http://eeb.ku.edu/john-kelly)
 and [Ford Ballantyne](http://fb4.ecology.uga.edu/people.html)
