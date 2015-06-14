@@ -34,3 +34,30 @@ The remaining parameters are the per-month tag loss probabilities.
 
 
 # estimation:
+First run
+
+    python do-it-yourself-interval-estimation.py data.tsv 1000 .1 .15 .2 .25
+
+It will crash becuase it does not have the per-datum log likelihood calculation
+filled in. See if you can figure out what the log-likelihood formula is.
+
+*hint* treat the fate of the tagged individuals from the previous month 
+  (the fate can be either "detected again" or "exited") as independent for 
+  each month.
+
+
+If you work that formula for the log-likelihood, see if you can program it on
+line 36 of the code.
+
+The comments between "DO NOT EDIT ABOVE HERE" and "DO NOT EDIT BELOW HERE"
+explain how the variables that are in scope at this spot in the code correspond
+the the quantities that are relevant to the likelhood calculation.
+
+
+# Seeing a worked example of interval estimation:
+If you prefer, you can see how I solved the problem using:
+
+    python 5-interval-estimate.py data.tsv 1000 .1 .15 .2 .25
+
+As you would expect to happen 95% of the time, the 95% confidence interval contains
+the true "death probability" that I used in the simulations (it was 0.1)
