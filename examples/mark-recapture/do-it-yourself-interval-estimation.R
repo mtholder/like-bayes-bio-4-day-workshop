@@ -31,14 +31,25 @@ calc.ln.likelihood = function(data, death.prob) {
         }
         curr.n <- data[curr.index];
         n.exited <- prev.n - curr.n;
-        recovery.prob <- (1.0 - tag.loss.prob)*(1 - death.prob);
-        exit.prob <- 1.0 - recovery.prob;
+        ###########################################
+        # DO NOT EDIT ABOVE HERE
+        # curr.n is the number of tags seen in this month.
+        # n.exited is the difference between this number and the previous month.
+        # tag.loss.prob is the probability of a tag that is working at the 
+        #   beginning of the previous month falls off or stops working during
+        #   the previous month
+        # death.prob is the probability that an individual alive at the 
+        #   beginning of the previous month is dead at this point in time.
+        ###########################################
         if (curr.n > 0) {
-            ln.like <- ln.like + curr.n*log(recovery.prob);
+            ln.like <- ln.like + INSERT CODE HERE
         }
         if (n.exited > 0) {
-            ln.like <- ln.like + n.exited*log(exit.prob);
+            ln.like <- ln.like + INSERT CODE HERE
         }
+        ###########################################
+        # DO NOT EDIT BELOW HERE
+        ###########################################
         prev.n <- curr.n;
     }
     return(ln.like);
