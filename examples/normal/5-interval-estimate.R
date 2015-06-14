@@ -96,7 +96,7 @@ find.upper.confidence.bound <- function(data,
     }
     ub <- find.upper.bound(data, ln.L.func, mle, ln.L.cutoff)
     return(optimize(f = ln.likelihood.upper.conf,
-                    interval=c(ub, mle))$minimum);
+                    interval=c(mle, ub))$minimum);
 }
 
 if (!is.na(user.mu)) {

@@ -21,6 +21,7 @@ def calc_ln_likelihood(data, death_prob):
     ln_L = 0.0
     for curr_n in data:
         n_exited = prev_n - curr_n
+        assert n_exited >= 0
         if tlp_list:
             tag_loss_prob = tlp_list.pop(0)
         recovery_prob = (1.0 - tag_loss_prob)*(1.0 - death_prob)
