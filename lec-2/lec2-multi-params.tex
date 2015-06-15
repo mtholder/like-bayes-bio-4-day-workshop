@@ -63,7 +63,6 @@ Numerical optimization -- practical recommendations.
 \begin{compactenum}
   \item Try multiple starting points.
   \item Try multiple optimization algorithms.
-  \item Don't skimp on optimization in your parametric bootstrapping (or at least make sure that the search for the global optimum is a good search).
   \item Reparameterization can help
   \item Using derivatives from finite differences can be surprisingly effective -- consider BFGS even if you can't calculate the gradient.
 \end{compactenum}
@@ -97,7 +96,22 @@ Bayes factors can be approximated using differences in:
   $$BIC(M|X) = 2k\ln(n) - 2 \ln L(\hat\theta | X, M)$$
 
 Better approximations of the Bayes factor are available, but they are usually much more expensive.
+\myNewSlide
+\section*{Parametric bootstrapping}
+\begin{compactenum}
+  \item Estimate $\hat{\theta}$
+  \item Estimate $\hat{\theta}_0$ -- the value of $\theta$ that agrees with the
+    null, which has the highest likelihood.
+  \item Calculate $\Lambda = \log L(\hat{\theta}) - \log L(\hat{\theta}_0)$, the observed LR test statistic.
+  \item Simulate $M$ data sets from $\hat{\theta}_0$. For each replicate $i$:S
+    \begin{compactenum}
+      \item Estimate $\hat{\theta}_i$
+      \item Estimate $\hat{\theta}_{0i}$
+      \item Calculate $\Lambda_i = \log L(\hat{\theta}_i) - \log L(\hat{\theta}_{0i})$, the observed LR test statistic.
+    \end{compactenum}  
+\end{compactenum}
 
+The proportion of the $M$ simulations for which $\Lambda_i \geq \Lambda$ approximates the $P$-value.
 
 \myNewSlide
 \normalsize
