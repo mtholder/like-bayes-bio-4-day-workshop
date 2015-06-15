@@ -68,6 +68,36 @@ Numerical optimization -- practical recommendations.
   \item Using derivatives from finite differences can be surprisingly effective -- consider BFGS even if you can't calculate the gradient.
 \end{compactenum}
 
+\myNewSlide
+\subsection*{Summary of LRT example}
+\normalsize
+\begin{itemize}
+  \item A test based on the likelihood ratio test statistic is the most powerful hypothesis test.
+  \item If we do not know the value of a parameter that occurs in the likelihood equation, we can estimate it.
+  \item Even if we don't care about the parameter (e.g. $\sigma$ in our original question); its value {\em can} affect our hypothesis tests. 
+  \item When the likelihood around the MLE looks ``normalish'' (not at a boundary and not a weird likelihood function), then the the $\chi_k^2$ distribution does a nice job of describing the null distribution of the LRT statistic for nested models.
+\end{itemize}
+\myNewSlide
+\section*{Alternative forms of model selection}
+The following methods do not assume that models are nested:
+\subsection*{minimizing the Akaike Information Criterion}
+  $$AIC(M|X) = 2k - 2 \ln L(\hat\theta | X, M)$$
+
+\subsection*{Bayes Factors}
+$B_{01}$ is the Bayes factor in favor of model 0 over model 1:
+$$B_{01} = \frac{\Pr(X|M_0)}{\Pr(X|M_1)}$$
+This is just a likelihood ratio, but it is not the likelihood evaluated at it maximum, rather it is:
+\begin{equation}
+  \Pr(X|M_0) = \int \Pr(X|\theta_0)\Pr(\theta_0) d\theta_0) \label{margLike}
+\end{equation}
+where $\theta_0$ is the set of parameters in model 0.
+
+\myNewSlide
+Bayes factors can be approximated using differences in:
+  $$BIC(M|X) = 2k\ln(n) - 2 \ln L(\hat\theta | X, M)$$
+
+Better approximations of the Bayes factor are available, but they are usually much more expensive.
+
 
 \myNewSlide
 \normalsize
