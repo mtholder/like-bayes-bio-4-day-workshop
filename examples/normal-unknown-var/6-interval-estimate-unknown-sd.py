@@ -140,7 +140,7 @@ def find_lower_confidence_bound(data,
         ln_L = ln_L_func(data, x)
         if VERBOSE:
             sys.stderr.write('In lower conf wrapper around ln_L_func with param = {m} lnL = {l}\n'.format(m=x, l=ln_L))
-        return abs(ln_L - ln_L_cutoff)
+        return (ln_L - ln_L_cutoff)**2
 
     lb = find_lower_bound(data, ln_L_func, mle, ln_L_cutoff)
     return optimize.fminbound(scipy_ln_likelihood_lower_conf,
@@ -159,7 +159,7 @@ def find_upper_confidence_bound(data,
         ln_L = ln_L_func(data, x)
         if VERBOSE:
             sys.stderr.write('In upper conf wrapper around ln_L_func with param = {m} lnL = {l}\n'.format(m=x, l=ln_L))
-        return abs(ln_L - ln_L_cutoff)
+        return (ln_L - ln_L_cutoff)**2
 
     ub = find_upper_bound(data, ln_L_func, mle, ln_L_cutoff)
     return optimize.fminbound(scipy_ln_likelihood_upper_conf,

@@ -1,0 +1,335 @@
+\documentclass[landscape]{foils} 
+\input{../preamble.tex}
+\renewcommand{\Pr}{\mathbb{P}}
+\usepackage{pdfpages}
+\begin{document}
+
+\unitlength=1mm
+
+
+
+\myNewSlide
+\section*{Another toy example}
+You tag 1000 territorial animals with transmitting tags.
+
+Every month you survey the area.
+Assume that you can detect every tag attached to a living organism.
+
+You know (from other studies) that the probability of a tag falling off are:
+0.10 in the first month, 0.15 in the second month, 0.2 in the third month, and
+0.25 for every month after that.
+
+Can you estimate the per-month probability of death?
+
+\myNewSlide
+You have studied bill width in a population of finches for many years. 
+
+You have a standardization technique that converts the widths to standardized
+widths that follow a Normal distribution with $\mu=0$ and $\sigma=1$. 
+The standardization relies on your historical studies of the finches.
+
+There is a drought, and you want to know if the mean width has changed.
+
+\begin{center}
+\begin{tabular}{c|c}
+Indiv. & standardized bill width \\
+\hline
+1 & 0.01009121 \\
+2 & 3.63415088 \\
+3 &-1.40851589 \\
+4 & 3.70573177 \\
+5 &-0.94145782
+\end{tabular}
+\end{center}
+
+\myNewSlide
+You suspect that a population of big horn sheep are made up of two classes of males based on their fighting ability: Strong and Weak. The proportion of strong individuals is unknown.\\ {\bf Experiment:}
+\begin{compactitem}
+  \item You randomly select 10 pairs of males from a large population. 
+  \item For each pair you randomly assign one of them the ID 0 and the other the ID 1.  
+  \item You record the \# of winner from 2 contests.
+\end{compactitem}
+{\bf Model:}
+\begin{compactitem}
+  \item If two individuals within the same class fight, you expect either outcome to be equally likely.
+  \item If a Strong is paired against a Weak then you expect that the probability that the stronger one wins with some probability, $w$.
+  \item $w$ is assumed to be the same for every pairing of Strong {versus} Weak and the same for every fight within such a pairing.
+\end{compactitem}
+
+\myNewSlide
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+& \multicolumn{2}{c|}{winner}\\
+Pair \# & fight 1 & fight 2 \\
+\hline
+1 & 1 & 1  \\
+\hline
+2 & 1 & 0  \\
+\hline
+3 & 0 & 1  \\
+\hline
+4 & 1 & 1  \\
+\hline
+5 & 0 & 0  \\
+\hline
+6 & 0 & 1   \\
+\hline
+7 & 1 & 1  \\
+\hline
+8 & 0 & 0  \\
+\hline
+9 & 1 & 0  \\
+\hline
+10 & 1 & 1   \\
+\hline
+\end{tabular}
+\end{center}
+
+What can we say about $w$?
+
+
+\myNewSlide
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+& \multicolumn{2}{c|}{winner}\\
+Pair \# & fight 1 & fight 2 \\
+\hline
+1 & 1 & 1  \\
+\hline
+2 & 1 & 0  \\
+\hline
+3 & 0 & 1  \\
+\hline
+4 & 1 & 1  \\
+\hline
+5 & 0 & 0  \\
+\hline
+6 & 0 & 1   \\
+\hline
+7 & 1 & 1  \\
+\hline
+8 & 0 & 0  \\
+\hline
+9 & 1 & 0  \\
+\hline
+10 & 1 & 1   \\
+\hline
+\end{tabular}
+\begin{tabular}{ll}
+\multicolumn{2}{c}{$X$}\\
+\\
+$x_1 = 1$ & $x_{11} = 1$  \\
+$x_2 = 1$ & $x_{12} = 0$  \\
+$x_3 = 0$ & $x_{13} = 1$  \\
+$x_4 = 1$ & $x_{14} = 1$  \\
+$x_5 = 0$ & $x_{15} = 0$  \\
+$x_6 = 0$ & $x_{16} = 1$  \\
+$x_7 = 1$ & $x_{17} = 1$  \\
+$x_8 = 0$ & $x_{18} = 0$  \\
+$x_9 = 1$ & $x_{19} = 0$  \\
+$x_{10} = 1$ & $x_{20} = 1$  \\
+\end{tabular}
+\end{center}
+
+$$L(w) = \prod_{i=1}^{20} \Pr(x_i|w)$$
+
+
+\myNewSlide
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+& \multicolumn{2}{c|}{winner}\\
+Pair \# & fight 1 & fight 2 \\
+\hline
+1 & 1 & 1  \\
+\hline
+2 & 1 & 0  \\
+\hline
+3 & 0 & 1  \\
+\hline
+4 & 1 & 1  \\
+\hline
+5 & 0 & 0  \\
+\hline
+6 & 0 & 1   \\
+\hline
+7 & 1 & 1  \\
+\hline
+8 & 0 & 0  \\
+\hline
+9 & 1 & 0  \\
+\hline
+10 & 1 & 1   \\
+\hline
+\end{tabular}
+\begin{tabular}{ll}
+\multicolumn{2}{c}{$X$}\\
+\\
+$x_1 = 1$ & $x_{11} = 1$  \\
+$x_2 = 1$ & $x_{12} = 0$  \\
+$x_3 = 0$ & $x_{13} = 1$  \\
+$x_4 = 1$ & $x_{14} = 1$  \\
+$x_5 = 0$ & $x_{15} = 0$  \\
+$x_6 = 0$ & $x_{16} = 1$  \\
+$x_7 = 1$ & $x_{17} = 1$  \\
+$x_8 = 0$ & $x_{18} = 0$  \\
+$x_9 = 1$ & $x_{19} = 0$  \\
+$x_{10} = 1$ & $x_{20} = 1$  \\
+\end{tabular}
+\end{center}
+
+$$\Pr(x_{11} = 1 | x_{1} = 1, w) \neq \Pr(x_{11} = 1 \mid x_{1} = 0, w)$$
+
+$$L(w) = \prod_{i=1}^{10} \Pr(x_i|w)\Pr(x_{10+i}|x_{i}, w)$$
+
+
+\myNewSlide
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+& \multicolumn{2}{c|}{winner}\\
+Pair \# & fight 1 & fight 2 \\
+\hline
+1 & 1 & 1  \\
+\hline
+2 & 1 & 0  \\
+\hline
+3 & 0 & 1  \\
+\hline
+4 & 1 & 1  \\
+\hline
+5 & 0 & 0  \\
+\hline
+6 & 0 & 1   \\
+\hline
+7 & 1 & 1  \\
+\hline
+8 & 0 & 0  \\
+\hline
+9 & 1 & 0  \\
+\hline
+10 & 1 & 1   \\
+\hline
+\end{tabular}
+\begin{tabular}{l}
+$Y$\\
+\\
+$y_1 = (1, 1)$   \\
+$y_2 = (1, 0)$  \\
+$y_3 = (0, 1)$  \\
+$y_4 = (1, 1)$  \\
+$y_5 = (0, 0)$  \\
+$y_6 = (0, 1)$  \\
+$y_7 = (1, 1)$  \\
+$y_8 = (0, 0)$  \\
+$y_9 = (1, 0)$  \\
+$y_{10} = (1, 1)$  \\
+\end{tabular}
+\end{center}
+
+
+$$L(w) = \prod_{i=1}^{10} \Pr(y_i|w)$$
+
+
+\myNewSlide
+0 = same ram wins both bouts\\
+1 = different rams win\\
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+& \multicolumn{2}{c|}{winner}\\
+Pair \# & fight 1 & fight 2 \\
+\hline
+1 & 1 & 1  \\
+\hline
+2 & 1 & 0  \\
+\hline
+3 & 0 & 1  \\
+\hline
+4 & 1 & 1  \\
+\hline
+5 & 0 & 0  \\
+\hline
+6 & 0 & 1   \\
+\hline
+7 & 1 & 1  \\
+\hline
+8 & 0 & 0  \\
+\hline
+9 & 1 & 0  \\
+\hline
+10 & 1 & 1   \\
+\hline
+\end{tabular}
+\begin{tabular}{l}
+$Z$\\
+\\
+$z_1 = 0$   \\
+$z_2 = 1$  \\
+$z_3 = 1$  \\
+$z_4 = 0$  \\
+$z_5 = 0$  \\
+$z_6 = 1$  \\
+$z_7 = 0$  \\
+$z_8 = 0$  \\
+$z_9 = 1$  \\
+$z_{10} = 0$  \\
+\end{tabular}
+\end{center}
+
+
+$$L(w) = \prod_{i=1}^{10} \Pr(z_i|w)$$
+
+
+\myNewSlide
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+& \multicolumn{2}{c|}{winner}\\
+Pair \# & fight 1 & fight 2 \\
+\hline
+1 & 1 & 1  \\
+\hline
+2 & 1 & 0  \\
+\hline
+3 & 0 & 1  \\
+\hline
+4 & 1 & 1  \\
+\hline
+5 & 0 & 0  \\
+\hline
+6 & 0 & 1   \\
+\hline
+7 & 1 & 1  \\
+\hline
+8 & 0 & 0  \\
+\hline
+9 & 1 & 0  \\
+\hline
+10 & 1 & 1   \\
+\hline
+\end{tabular}
+\begin{tabular}{l}
+$Z$\\
+\\
+$z_1 = 0$   \\
+$z_2 = 1$  \\
+$z_3 = 1$  \\
+$z_4 = 0$  \\
+$z_5 = 0$  \\
+$z_6 = 1$  \\
+$z_7 = 0$  \\
+$z_8 = 0$  \\
+$z_9 = 1$  \\
+$z_{10} = 0$  \\
+\end{tabular}
+\end{center}
+
+
+$$L(w) = \prod_{i=1}^{10} \Pr(z_i|w)$$
+$$ A = \sum_{i=1}^{10}z_i = 4$$
+$$L(w) = \Pr(Z=0|w)^{(n-A)}\Pr(Z=1|w)^{A}$$
+
+\end{document}
