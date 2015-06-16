@@ -33,12 +33,18 @@ def calc_ln_likelihood(data, death_prob):
         # death_prob is the probability that an individual alive at the 
         #   beginning of the previous month is dead at this point in time.
         ###########################################
-        ln_L_this_datum = INSERT CODE HERE
+        #print('death', death_prob)
+        prob_recovery = (1.0 - death_prob)*(1.0 - tag_loss_prob)
+        #print('prob_recovery', prob_recovery)
+        prob_not_rec = 1.0 - prob_recovery
+        ln_L_this_datum = curr_n*math.log(prob_recovery) + n_exited * math.log(prob_not_rec)
         ###########################################
         # DO NOT EDIT BELOW HERE
         ###########################################
         ln_L += ln_L_this_datum
         prev_n = curr_n
+    print('death = ', death_prob)
+    #assert False
     return ln_L
 
 # ALL of the functions below here are VERY similar to the 

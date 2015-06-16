@@ -52,6 +52,7 @@ calc.ln.likelihood = function(data, death.prob) {
         ###########################################
         prev.n <- curr.n;
     }
+    q(status=1)
     return(ln.like);
 }
 
