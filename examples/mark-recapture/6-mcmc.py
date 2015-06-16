@@ -24,13 +24,13 @@ import os
 ####################################################
 # The following 3 functions vary from application to application...
 ####################################################
-PROPOSAL_WINDOW_SIZE = 0.1
+PROPOSAL_WINDOW_SIZE = 0.01
 def propose_new_state(theta):
     '''Return a randomly proposed state and the 
     log(Hastings ratio).
     '''
     # propose a state from among the adjacent states
-    u_neg_half_to_half = random.random() - 1.0
+    u_neg_half_to_half = random.random() - .50
     diff = PROPOSAL_WINDOW_SIZE*u_neg_half_to_half
     proposed_state = theta + diff
     if proposed_state < 0.0:
@@ -41,13 +41,15 @@ def propose_new_state(theta):
     return proposed_state, 0.0
 
 def calc_ln_likelihood(data, death_prob):
-    if death_prob < 0.0 or death_prob > 0:
+    #sys.stderr.write('death_prob = {d} ...\n'.format(d=death_prob))
+    if death_prob < 0.0 or death_prob > 1.0:
         return float('-inf')
     global tag_loss_prob_list, initial_n
     # Pr(n_i | n_{i-1} ) = [(1 - tag_loss_prob)(1 - death_prob)]^(n_i)[1 - (1 - tag_loss_prob)(1 - death_prob)]^(n_{i-1} - n_i)
     prev_n = initial_n
     tlp_list = list(tag_loss_prob_list) # make a copy so that we don't change the global!
     ln_L = 0.0
+    #sys.exit(str((initial_n, tag_loss_prob_list, data)))
     for curr_n in data:
         n_exited = prev_n - curr_n
         assert n_exited >= 0
@@ -60,6 +62,7 @@ def calc_ln_likelihood(data, death_prob):
         if n_exited > 0:
             ln_L += n_exited * math.log(exit_prob)
         prev_n = curr_n
+    #sys.stderr.write('death_prob = {d} lnL = {l}\n'.format(d=death_prob, l=ln_L))
     return ln_L
 
 def calc_ln_prior(theta):
@@ -77,9 +80,10 @@ if __name__ == '__main__':
     #   std_dev as the sigma parameter for the normal distribution
     try:
         filename = sys.argv[1]
-        num_it = float(sys.argv[2])
+        num_it = int(sys.argv[2])
+        initial_n = int(sys.argv[3])
         assert num_it > 0
-        tag_loss_prob_list = [float(i) for i in sys.argv[3:]]
+        tag_loss_prob_list = [float(i) for i in sys.argv[4:]]
         for tlp in tag_loss_prob_list:
             assert tlp >= 0.0
             assert tlp <= 1.0
@@ -113,9 +117,6 @@ def metropolis_hastings(data, start_state, mcmc_samples, sample_freq):
         ln_likelihood_ratio = proposed_ln_likelihood - ln_likelihood
 
         ln_posterior_ratio = ln_prior_ratio + ln_likelihood_ratio
-
-        # Hastings ratio is 1.0, so we can ignore it...
-        hastings_ratio = (0.5)/(0.5)
 
         ln_acceptance_ratio = ln_posterior_ratio + ln_hastings_ratio
         

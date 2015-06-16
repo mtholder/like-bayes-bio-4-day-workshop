@@ -1,10 +1,4 @@
 #!/usr/bin/env python
-# This program 2 or 3 arguments:
-#      a filename of a file with the data (one datum per line), and
-#      a standard deviation
-# Reports summary statistics and an MLE for prob
-# If a third argument is provided, it is interpreted as a value for prob
-#     and the likelihood is calculated.
 
 args <- commandArgs(trailingOnly=TRUE);
 filename <- args[1]
@@ -15,7 +9,7 @@ if (is.na(initial.pop) || initial.pop < 0) {
 }
 tag.loss.prob.list <- as.numeric(args[3:length(args)]);
 if (length(args) < 3) {
-    write("The third argument must be tag loss probability");
+    write("The third argument must be tag loss probabilities");
     q(status=1);
 }
 ## Read the data...
